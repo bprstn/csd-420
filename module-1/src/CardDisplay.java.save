@@ -1,0 +1,68 @@
+nano
+/**
+ * Name: Brian Preston
+ * Course: CSD-340
+ * Assignment: M1 Assignment
+ * Description: This JavaFX application displays four randomly selected card images from a deck
+ * and allows the user to refresh the selection with a button click using lambda expressions.
+ */
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+import java.util.Collections;
+import java.util.ArrayList;
+
+public class CardDisplay extends Application {
+    private ArrayList<String> cards = new ArrayList<>();
+
+    @Override
+    public void start(Stage primaryStage) {
+        // Load card images from the cards directory
+        loadCards();
+
+        // Create a horizontal box to display cards
+        HBox cardBox = new HBox(10);
+        refreshCards(cardBox);
+
+        // Create a refresh button and set its action using a lambda expression
+        Button btnRefresh = new Button("Refresh");
+        btnRefresh.setOnAction(e -> refreshCards(cardBox));
+
+        // Set up the scene and stage
+        HBox root = new HBox(10);
+        root.getChildren().addAll(cardBox, btnRefresh);
+        Scene scene = new Scene(root, 500, 250);
+        primaryStage.setTitle("Card Display");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void loadCards() {
+        // Load images from the cards directory
+        for (int i = 1; i <= 52; i++) {
+            cards.add("file:cards/" + i + ".png");
+        }
+    }
+
+    private void refreshCards(HBox cardBox) {
+        // Shuffle the cards and display four random cards
+        Collections.shuffle(cards);
+        cardBox.getChildren().clear();
+        for (int i = 0; i < 4; i++) {
+            Image img = new Image(cards.get(i), 100, 150, true, true);
+            ImageView imgView = new ImageView(img);
+            cardBox.getChildren().add(imgView);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
