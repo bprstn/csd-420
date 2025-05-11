@@ -18,7 +18,7 @@ public class MySQLTest {
 
             // Establish connection
             Connection conn = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
-            System.out.println("✅ SUCCESS: Connected to MySQL database!");
+            System.out.println("Connected to MySQL database!");
 
             // Simple test query
             Statement stmt = conn.createStatement();
@@ -33,7 +33,7 @@ public class MySQLTest {
             stmt.close();
             conn.close();
         } catch (Exception e) {
-            System.out.println("❌ ERROR: " + e.getMessage());
+            System.out.println("Connection error: " + e.getMessage());
             e.printStackTrace();
         }
     }
